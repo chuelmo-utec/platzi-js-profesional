@@ -1,0 +1,5 @@
+*.mp4
+*.pdf
+*.docx
+*.tmp
+**/node_modules/
