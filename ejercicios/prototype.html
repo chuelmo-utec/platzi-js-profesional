@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype</title>
+</head>
+<body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+        //Un objeto común y corriente
+        const zelda = {
+            name: 'Zelda'
+        }
+
+        zelda.saludar = function() {
+            console.log(`Hola soy ${this.name}`)
+        }
+
+        zelda.saludar()
+
+        const link = {
+            name: 'Link'
+        }
+
+        link.saludar = function() {
+            console.log(`Hola soy ${this.name}`)
+        }
+
+        link.saludar()
+
+        // Ahora seamos un poco más eficientes
+        function Hero(name) {
+            const hero = {
+                name: name
+            }
+
+            hero.saludar = function() {
+                console.log(`Hola soy ${this.name}`)
+            }
+
+            return hero
+        }
+
+        const zeldaHero = Hero('Zelda')
+        zeldaHero.saludar()
+        const linkHero = Hero('Link')
+        linkHero.saludar()
+
+        //OK, podemos ser aún más eficientes
+        const heroMethods = {
+            saludar: function() {
+                console.log(`Hola, soy ${this.name}`)
+            }
+        }
+
+        function HeroWithMethods(name) {
+            const hero = {
+                name: name
+            }
+            hero.saludar = heroMethods.saludar
+            return hero
+        }
+        const spiderman = Hero('Spiderman')
+        spiderman.saludar()
+
+        const superman = Hero('Superman')
+        superman.saludar()
+
+        //Ahora con Object.create
+        //const nuevoObjeto = Object.create(objeto)
+        const heroObjectMethods = {
+            saludar: function() {
+                console.log(`Hola, soy ${this.name}`)
+            }
+        }
+
+        function HeroObjectCreate(name) {
+            const hero = Object.create(heroObjectMethods)
+            hero.name = name
+            return hero
+        }
+
+        const wonderwoman = HeroObjectCreate('Mujer maravilla')
+        wonderwoman.saludar()
+
+        //Ahora los métodos de Hero dentro de Hero
+        function HeroPrototype(name) {
+            const hero = Object.create(Hero.prototype)
+            hero.name = name
+            return hero
+        }
+
+        Hero.prototype.saludar = function() {
+            console.log(`Soy el superhéroe ${this.name}`)
+        }
+
+        const hulk = HeroPrototype('Hulk')
+        hulk.saludar()
+
+        //Usando new, new es un atajo 'azúcar sintáctico' para llevar Hero.prototype al objeto
+        function HeroNew(name) {
+            // con new el lenguaje hace algo así como:
+            // this = Object.create(objeto.prototype)
+            this.name = name
+            //return this <-- esto es implícito, no hay que hacerlo
+        }
+
+        HeroNew.prototype.saludar = function() {
+            console.log(`New héroe: ${this.name}`)
+        }
+
+        const ligthgreen = new HeroNew('Lightgreen')
+        ligthgreen.saludar()
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>call-apply-bind</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <h1>Los métodos call, apply y bind</h1>
+    <p>Estas funciones nos sirven para establecer el valor de <i>this</i>,
+        es decir, cambiar el contexto que se va a usar cuando la función
+        sea llamada.
+    </p>
+    <p>
+        Las funciones <b>call, apply y bind</b> son parte del prototipo Function.
+        Toda función usa este prototipo y por lo tanto tiene estas tres funciones.
+    </p>
+    <ul>
+        <li><b>functionName.call()</b>: Ejecuta la función recibiendo como primer parámetro
+            el <i>this</i> y los siguientes son los argumentos que recibe la función
+            que llamó a <b>call</b>.
+        </li>
+        <li>
+            <b>functionName.apply()</b>: Ejecuta la función recibiendo como primer parámetro
+            el <i>this</i> y como segundo un arreglo con los argumentos que recibe la función
+            que llamó a <b>apply</b>.
+        </li>
+        <li>
+            <b>functionName.bind()</b>: Recibe como primer y único argumento el <i>this</i>.
+            No ejecuta la función, sólo regresa otra función con el nuevo <i>this</i> integrado.
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <button class="call-to-action">Aprender</button>
+        </li>
+        <li>
+            <button class="call-to-action">Aprender más</button>
+        </li>
+        <li>
+            <button class="call-to-action">¡Nunca pares de aprender!</button>
+        </li>
+    </ul>
+
+    <script>
+        // Establece 'this' usando 'call'
+        function saludar() {
+            console.log(`Hola, soy ${this.name} ${this.surname}`)
+        }
+        const richard = {
+            name: 'Richard',
+            surname: 'Kaufman'
+        }
+
+        saludar.call(richard)
+
+        // Establece 'this' usando 'call' y pasando argumentos
+
+        function caminar(metros, direccion) {
+            console.log(`${this.name} camina ${metros} metros en dirección ${direccion}`)
+        }
+
+        caminar.call(richard, 6, 'Sur')
+
+        // Establece 'this' usando 'apply' y pasar argumentos a la función
+        caminar.apply(richard, [800, 'este'])
+
+        // Para no confundir call con apply
+        // Call - la C de call recordamos como coma
+        // Apply - la A de Apply la asociamos con arreglo y listo
+
+        // Establcer 'this' en una nueva función usando bind
+        const daniel = {
+            name: 'Daniel',
+            surname: 'Sanchez'
+        }
+        const danielSaluda = saludar.bind(daniel)
+        danielSaluda()
+
+        const danielCamina = caminar.bind(daniel)
+        danielCamina(1000, 'NorOeste')
+
+        const danielCaminaConArgumentosBind = caminar.bind(daniel, 1234, 'sureste')
+        danielCaminaConArgumentosBind()
+
+        //podemos llamar a bind con argumentos parciales ej:
+        const danielCaminaAlgunosArgumentos = caminar.bind(daniel, 377)
+        danielCaminaAlgunosArgumentos('suroeste')
+
+        //Ejemplo de uso de estos métodos
+        const buttons = document.getElementsByClassName("call-to-action")
+        // buttons.forEach(button => {
+        //     button.onclick = () => {
+        //         alert('Nunca pares de aprender!')
+        //     }
+        // }) // esto no funciona porque getElementsByClassName devuelve un nodelist
+
+        //NodeList != arreglos
+        Array.prototype.forEach.call(buttons, button => {
+            button.onclick = () => {alert('Nunca pares de aprender')}
+        })
+
+    </script>
+  </body>
+</html>
