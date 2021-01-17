@@ -4,4 +4,5 @@
 *.pdf
 *.docx
 *.tmp
+*.png
 **/node_modules/
