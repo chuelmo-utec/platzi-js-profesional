@@ -6,3 +6,5 @@
 *.tmp
 *.png
 **/node_modules/
+.cache
+dist
